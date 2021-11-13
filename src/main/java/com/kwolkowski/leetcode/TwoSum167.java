@@ -3,6 +3,7 @@ package com.kwolkowski.leetcode;
 import java.util.HashMap;
 
 public class TwoSum167 {
+    // TODO: Find a solution with two pointers
     public int[] twoSum(int[] numbers, int target) {
         int[] result = new int[2];
 
