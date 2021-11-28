@@ -4,40 +4,26 @@ import java.util.*;
 
 public class MinimumCostRobot {
     public static int minCost(int[] startPos, int[] homePos, int[] rowCosts, int[] colCosts) {
-        PriorityQueue<int[]> toVisit = new PriorityQueue<>(Comparator.comparingInt(o -> o[0]));
-        toVisit.add(new int[]{0, startPos[0], startPos[1]});
-
-        int[] currPos;
-        int currCost = 0;
-        HashMap<String, Integer> visited = new HashMap<>();
-        while(!toVisit.isEmpty()) {
-            int[] entry = toVisit.poll();
-            currCost = entry[0];
-            currPos = new int[]{entry[1], entry[2]};
-            String key = currPos[0] + "," + currPos[1];
-            if(currPos[0] == homePos[0] && currPos[1] == homePos[1]) return currCost;
-            if(visited.containsKey(key)) {
-                if(visited.get(key) < currCost)
-                    continue;
+        int cost = 0;
+        if(startPos[0] < homePos[0]) {
+            for (int i = startPos[0]+1; i <= homePos[0]; i++) {
+                cost += rowCosts[i];
             }
-            visited.put(key, currCost);
-
-            int x = currPos[0];
-            int y = currPos[1];
-
-            if(x>0) {
-                toVisit.add(new int[]{currCost + rowCosts[x-1], x-1, y});
-            }
-            if(x<rowCosts.length-1) {
-                toVisit.add(new int[]{currCost + rowCosts[x+1], x+1, y});
-            }
-            if(y>0) {
-                toVisit.add(new int[]{currCost + colCosts[y-1], x, y-1});
-            }
-            if(y<colCosts.length-1) {
-                toVisit.add(new int[]{currCost + colCosts[y+1], x, y+1});
+        } else {
+            for (int i = startPos[0]-1; i >= homePos[0]; i--) {
+                cost += rowCosts[i];
             }
         }
-        return currCost;
+
+        if(startPos[1] < homePos[1]) {
+            for (int i = startPos[1]+1; i <= homePos[1]; i++) {
+                cost += colCosts[i];
+            }
+        } else {
+            for (int i = startPos[1]-1; i >= homePos[1]; i--) {
+                cost += colCosts[i];
+            }
+        }
+        return cost;
     }
 }
