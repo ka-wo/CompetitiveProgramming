@@ -6,15 +6,16 @@ import java.util.List;
 public class BinaryTreePreorderTravers144 {
     public List<Integer> preorderTraversal(TreeNode root) {
         List<Integer> list = new LinkedList<>();
-        traverse(root, list);
+        LinkedList<TreeNode> toVisit = new LinkedList<>();
+        toVisit.add(root);
+        while(!toVisit.isEmpty()) {
+            TreeNode node = toVisit.pop();
+            if(node == null) continue;
+            list.add(node.val);
+            toVisit.addFirst(node.right);
+            toVisit.addFirst(node.left);
+        }
         return list;
-    }
-
-    public void traverse(TreeNode root, List<Integer> l) {
-        if (root == null) return;
-        l.add(root.val);
-        traverse(root.left, l);
-        traverse(root.right, l);
     }
 
     static class TreeNode {
