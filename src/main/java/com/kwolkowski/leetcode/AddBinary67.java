@@ -3,23 +3,20 @@ package com.kwolkowski.leetcode;
 public class AddBinary67 {
 
     public static String addBinary(String a, String b) {
-
-        int i = a.length();
-        int j = b.length();
-        StringBuilder res = new StringBuilder();
-        int rem = 0;
-        while(i > 0 || j > 0) {
-            int sum = 0;
-            if(i > 0) sum += a.charAt(i-1) - '0';
-            if(j > 0) sum += b.charAt(j-1) - '0';
-            sum += rem;
-            rem = sum / 2;
-            res.append(sum % 2);
-            i--;
-            j--;
+        int aLen = a.length()-1;
+        int bLen = b.length()-1;
+        StringBuilder sb = new StringBuilder();
+        int carry = 0;
+        while(aLen >= 0 || bLen >= 0) {
+            int count = carry;
+            if(aLen >= 0) count += a.charAt(aLen--) - '0';
+            if(bLen >= 0) count += b.charAt(bLen--) - '0';
+            carry = count/2;
+            count %= 2;
+            sb.append(count);
         }
-        if(rem == 1) res.append('1');
-        return res.reverse().toString();
+        if(carry > 0) sb.append(carry);
+        return sb.reverse().toString();
     }
 
 }
